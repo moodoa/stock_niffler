@@ -52,7 +52,7 @@ class STOCK_NIFFLER:
                         except:
                             del stocks[stock[0]]
         return stocks, dates
-    
+
     def draw(self, data, number, price_volume, dates):
         plt.figure(figsize=(15, 8))
         plt.style.use("fivethirtyeight")
@@ -61,13 +61,16 @@ class STOCK_NIFFLER:
         dates = dates[::-1]
         for idx in range(len(dates)):
             price_volume_str.append(f"{dates[idx]}\n{price_volumes[idx]}")
-        colors = {"price":"R", "volume":"B"}
-        print(f"{number} {data[number]['name']} 近 {len(dates)} 日 {price_volume} 為 :\n {price_volumes}")
-        plt.plot(price_volume_str, price_volumes, color = colors[price_volume])
-        plt.xticks(fontsize = 5)
-        plt.yticks(fontsize = 5)
-        plt.xlabel("day", fontsize = 8)
+        colors = {"price": "R", "volume": "B"}
+        print(
+            f"{number} {data[number]['name']} 近 {len(dates)} 日 {price_volume} 為 :\n {price_volumes}"
+        )
+        plt.plot(price_volume_str, price_volumes, color=colors[price_volume])
+        plt.xticks(fontsize=5)
+        plt.yticks(fontsize=5)
+        plt.xlabel("day", fontsize=8)
         plt.show()
+
 
 if __name__ == "__main__":
     niffler = STOCK_NIFFLER()
