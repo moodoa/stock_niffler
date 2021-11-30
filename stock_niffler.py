@@ -53,6 +53,29 @@ class STOCK_NIFFLER:
                             del stocks[stock[0]]
         return stocks, dates
 
+    def stock_rank(self, stocks):
+        for k, v in stocks.items():
+            v["rising"] = round(
+                ((v["price"][0] - v["price"][-1]) / v["price"][-1]) * 100, 2
+            )
+        sort_stocks = sorted(stocks.items(), key=lambda x: x[1]["rising"], reverse=True)
+        listed_stocks = {}
+        for item in sort_stocks:
+            if len(item[0]) == 4:
+                listed_stocks[item[0]] = item[1]
+        print("*****\n所有股票漲幅 top 5 :")
+        for idx in range(5):
+            print(
+                f"{sort_stocks[idx][0]} {sort_stocks[idx][1]['name']} {sort_stocks[idx][1]['rising']}%({sort_stocks[idx][1]['price'][-1]}→{sort_stocks[idx][1]['price'][0]})"
+            )
+        print("*****\n上市(櫃)股票漲幅 top 5 :")
+        listed_stocks = list(listed_stocks.items())
+        for idx in range(5):
+            print(
+                f"{listed_stocks[idx][0]} {listed_stocks[idx][1]['name']} {listed_stocks[idx][1]['rising']}%({listed_stocks[idx][1]['price'][-1]}→{listed_stocks[idx][1]['price'][0]})"
+            )
+        return ""
+
     def draw(self, data, number, price_volume, dates):
         plt.figure(figsize=(15, 8))
         plt.style.use("fivethirtyeight")
@@ -76,6 +99,7 @@ if __name__ == "__main__":
     niffler = STOCK_NIFFLER()
     days_ago = input("你想蒐集前幾天的資訊 ?")
     data, dates = niffler._collect_stock(days_ago)
+    niffler.stock_rank(data)
     while True:
         number = input("你想查哪支股票(代號) ? ")
         price_volume = input("你想查股價還是交易量 ? (輸入 price 或volume) ?")
