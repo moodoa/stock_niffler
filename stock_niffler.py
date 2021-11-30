@@ -99,6 +99,7 @@ if __name__ == "__main__":
     niffler = STOCK_NIFFLER()
     days_ago = input("你想蒐集前幾天的資訊 ?")
     data, dates = niffler._collect_stock(days_ago)
+    # 列出漲幅 top 5
     niffler.stock_rank(data)
     while True:
         number = input("你想查哪支股票(代號) ? ")
