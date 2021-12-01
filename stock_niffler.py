@@ -25,9 +25,11 @@ class STOCK_NIFFLER:
             try:
                 page = requests.get(url, params=query_params)
             except:
-                print(f"retry {date}")
+                page = []
+                print(f"{date} 尚未收盤，請稍後再試。")
+                break
             time.sleep(5)
-            if page.json()["stat"] == "OK":
+            if page and page.json()["stat"] == "OK":
                 day_searched += 1
                 dates.append(date)
                 print(f"{date} added")
@@ -100,8 +102,9 @@ if __name__ == "__main__":
     days_ago = input("你想蒐集前幾天的資訊 ?")
     data, dates = niffler._collect_stock(days_ago)
     # 列出漲幅 top 5
-    niffler.stock_rank(data)
-    while True:
-        number = input("你想查哪支股票(代號) ? ")
-        price_volume = input("你想查股價還是交易量 ? (輸入 price 或volume) ?")
-        niffler.draw(data, number, price_volume, dates)
+    if data:
+        niffler.stock_rank(data)
+        while True:
+            number = input("你想查哪支股票(代號) ? ")
+            price_volume = input("你想查股價還是交易量 ? (輸入 price 或volume) ?")
+            niffler.draw(data, number, price_volume, dates)
