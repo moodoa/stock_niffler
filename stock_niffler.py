@@ -70,7 +70,7 @@ class STOCK_NIFFLER:
             print(
                 f"{sort_stocks[idx][0]} {sort_stocks[idx][1]['name']} {sort_stocks[idx][1]['rising']}%({sort_stocks[idx][1]['price'][-1]}→{sort_stocks[idx][1]['price'][0]})"
             )
-        print("*****\n上市(櫃)股票漲幅 top 5 :")
+        print("*****\n上市股票漲幅 top 5 :")
         listed_stocks = list(listed_stocks.items())
         for idx in range(5):
             print(
