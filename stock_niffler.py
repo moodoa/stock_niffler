@@ -76,7 +76,7 @@ class STOCK_NIFFLER:
             print(
                 f"{listed_stocks[idx][0]} {listed_stocks[idx][1]['name']} {listed_stocks[idx][1]['rising']}%({listed_stocks[idx][1]['price'][-1]}→{listed_stocks[idx][1]['price'][0]})"
             )
-        return ""
+        return listed_stocks
 
     def draw(self, data, number, price_volume, dates):
         plt.figure(figsize=(15, 8))
@@ -101,10 +101,13 @@ if __name__ == "__main__":
     niffler = STOCK_NIFFLER()
     days_ago = input("你想蒐集前幾天的資訊 ?")
     data, dates = niffler._collect_stock(days_ago)
-    # 列出漲幅 top 5
     if data:
-        niffler.stock_rank(data)
+        # 列出漲幅 top 5
+        listed_stocks = niffler.stock_rank(data)
         while True:
-            number = input("你想查哪支股票(代號) ? ")
+            number = input("*****\n你想查哪支股票(代號) ? ")
             price_volume = input("你想查股價還是交易量 ? (輸入 price 或volume) ?")
+            for idx in range(len(listed_stocks)):
+                if listed_stocks[idx][0] == number:
+                    print(f"*****\n{number} 漲幅排名 : {idx+1} / {len(listed_stocks)}") 
             niffler.draw(data, number, price_volume, dates)
